@@ -1,0 +1,209 @@
+/* Overlay */
+.settlementOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+/* Modal Content */
+.settlementContent {
+  background: #ffffff;
+  position: relative;
+  z-index: 2001;
+  padding: 24px 28px;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 500px;
+}
+
+.settlementContent h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 24px;
+  text-align: center;
+  color: #1a202c;
+}
+
+/* Payment Flow */
+.settlementFlow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.settlementParty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #4a5568;
+  font-size: 14px;
+}
+
+.settlementAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #7664c4;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.settlementArrow {
+  font-size: 24px;
+  color: #a0aec0;
+}
+
+.settlementRecipient select {
+  width: 120px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 14px;
+  background-color: #f7fafc;
+  appearance: none;
+}
+
+/* Form Rows */
+.settlementRow {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.settlementGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.settlementGroup label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #718096;
+  margin-bottom: 6px;
+}
+
+.settlementGroup input[type="number"],
+.settlementGroup input[type="date"],
+.settlementGroup input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.settlementGroup input:focus {
+  outline: none;
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+/* Currency Input */
+.settlementAmountInput {
+  display: flex;
+  align-items: center;
+}
+
+.settlementAmountInput input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+
+.settlementCurrency {
+  padding: 10px;
+  border: 1px solid #cbd5e0;
+  border-left: 1px solid #e2e8f0;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: #f7fafc;
+  font-size: 16px;
+}
+
+/* Search Input */
+.settlementSearchable {
+  position: relative;
+}
+
+.settlementSearchable input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* Actions */
+.settlementActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.settlementActions button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.settlementCancel {
+  background-color: #edf2f7;
+  color: #4a5568;
+}
+
+.settlementCancel:hover {
+  background-color: #e2e8f0;
+}
+
+.settlementSave {
+  background-color: #4F46E5;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settlementSave:hover {
+  background-color: #4338ca;
+}
+
+.settlementEnter {
+  font-size: 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+#group{
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  font-size: 15px;
+  box-sizing: border-box;
+  background: #fdfdfd;
+}
+#group:focus{
+  outline: none;
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}

@@ -1,0 +1,110 @@
+.balance-wrapper {
+    margin: 20px auto;
+    width: 100%;
+    max-width: 650px;
+  }
+  
+  .balance-date {
+    background-color: #f5f5f5;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .balance-card {
+    background: #fff;
+    border: 1px solid #e4e4e7;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .balance-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+  }
+  
+  .balance-user {
+    margin: 0;
+    font-size: 16px;
+    color: #222;
+  }
+  
+  .balance-subtext {
+    margin: 2px 0 0 0;
+    font-size: 13px;
+    color: #666;
+  }
+  
+  .balance-right {
+    text-align: right;
+  }
+  
+  .balance-amount {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .balance-status {
+    font-size: 13px;
+    color: #666;
+    margin-top: 2px;
+  }
+  
+  .green-text {
+    color: #16a34a;
+  }
+  
+  .red-text {
+    color: #dc2626;
+  }
+  
+  .black-text {
+    color: #1f2937;
+  }
+  .balances-page {
+    padding: 24px;
+    background-color: #f9fafb;
+    min-height: 100vh;
+  }
+  
+  .balances-header {
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  
+  .balances-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 6px;
+  }
+  
+  .balances-header h2::after {
+    content: "";
+    display: block;
+    width: 50%;
+    height: 3px;
+    background-color: #4f46e5; 
+    margin: 6px auto 0;
+    border-radius: 2px;
+  }
+  
+  .balances-header p {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #6b7280;
+  }
+    

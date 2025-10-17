@@ -44,25 +44,6 @@ const Expenses = () => {
     fetchExpense()
   },[])
 
-  const sampleExpenses = [
-    {
-      description: "Pizza",
-      amount: 1200,
-      currency: "PKR",
-      date: "2025-09-27",
-      payer: { name: "Ali" },
-      participants: [{}, {}, {}],
-    },
-    {
-      description: "Hotel",
-      amount: 5000,
-      currency: "PKR",
-      date: "2025-09-20",
-      payer: { name: "Sara" },
-      participants: [{}, {}],
-    },
-  ];
-
   return (
     <div className='home'>
       <div className='d-flex justify-content-between align-items-center expenseHead'>

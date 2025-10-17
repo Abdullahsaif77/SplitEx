@@ -23,6 +23,7 @@ function Register() {
     email:"",
     passwordHash:""
   });
+  console.log(formData)
 
   const handleLogin = async(e)=>{
     e.preventDefault();
@@ -32,8 +33,8 @@ function Register() {
         const token = response.data.token
         localStorage.setItem("token",token);
 
-        const verify = await axios.post('http://localhost:5500/profile',
-          {},
+        const verify = await axios.get('http://localhost:5500/profile',
+          
           {
             headers:{
               Authorization:`Bearer ${token}`

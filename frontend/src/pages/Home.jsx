@@ -12,6 +12,7 @@ const Home = () => {
   const [plusbalance , setplusbalance] = useState(0);
   const [negativebalance , setnegativebalance] = useState(0);
   const [activities , setactivities] = useState([])
+  const [you_owe , setyou_owe] = useState("")
 
 
   useEffect(()=>{
@@ -26,11 +27,11 @@ const Home = () => {
           }
         )
         if(response.status == 200){
-          if(response.data.balance >= 0){
+          setyou_owe(response.data.you_owe)
+          if(response.data.totalBalance >= 0){
             console.log(response)
-            setplusbalance(response.data.balance)
-          }else{
-            setnegativebalance(response.data.balance)
+            const bal = Math.round(response.data.totalBalance)
+            setplusbalance(bal)
           }
           setactivities(response.data.activities || [])
         }
@@ -52,7 +53,7 @@ const Home = () => {
         </div>
         <div className='balance-item'>
           <p className='mt-3'>You Owe</p>
-          <h3 className='pb-3 text-danger'>PKR {negativebalance}</h3>
+          <h3 className='pb-3 text-danger'>PKR {you_owe}</h3>
         </div>
       </div>
 

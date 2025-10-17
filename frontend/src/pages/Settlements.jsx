@@ -38,7 +38,7 @@ const Settlements = () => {
 
     const handleSaveSettlement = (data) => {
         console.log("Settlement saved:", data);
-        
+        setsettlements((prev) => [data, ...prev]);
       };
 
   const sampleSettlements = [

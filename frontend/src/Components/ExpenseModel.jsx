@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import "../styles/ExpenseModel.css";
 import axios from "axios";
 
-const ExpenseModal = ({ isOpen, onClose, formData, setformData }) => {
-  if (!isOpen) return null;
+const ExpenseModal = ({ isOpen, onClose, formData, setformData, isExpense }) => {
+  const isVisible = isOpen || isExpense
+
+  if(!isVisible) return null
 
   const [groups, setGroups] = useState([]);
   const [selectGroup, setSelectGroup] = useState(null);

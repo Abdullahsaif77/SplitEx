@@ -12,13 +12,13 @@ const register = async (req, res) => {
       return res.status(400).json({ message: "Fill all the inputs" });
     }
 
-    // Check if user already exists
+    
     const existingUser = await Users.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "User already exists" });
     }
 
-    // Hash password and create new user
+    
     const hashedPass = await hashpassword(passwordHash);
     const user = await Users.create({
       name,
@@ -29,18 +29,18 @@ const register = async (req, res) => {
 
     let groupJoined = false;
 
-    // ✅ If signup came via invite
+   
     if (groupId && token) {
       const invite = await Invite.findOne({ groupId, token, email });
 
       if (invite) {
-        // Add user to group members
+       
         await Group.updateOne(
           { _id: groupId },
           { $push: { members: { userId: user._id, role: "member" } } }
         );
 
-        // Delete invite (prevent reuse)
+        
         await Invite.deleteOne({ _id: invite._id });
 
         groupJoined = true;

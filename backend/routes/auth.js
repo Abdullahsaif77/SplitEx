@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post('/register',register);
 router.post('/login',login)
-router.post('/profile',authMiddleware , (req,res)=>{
+router.get('/profile',authMiddleware , (req,res)=>{
     res.json({ message: "Protected route", user: req.user });
 })
 

@@ -4,7 +4,7 @@ import "../styles/BalanceCard.css";
 
 const BalanceCard = ({ balance}) => {
 
-  
+  const roundNet = Math.round(balance.net)
 
   const getColor = (value) => {
     if (value > 0) return "green-text";
@@ -23,11 +23,11 @@ const BalanceCard = ({ balance}) => {
           <p className="balance-subtext">Net balance summary</p>
         </div>
         <div className="balance-right">
-          <p className={`balance-amount ${getColor(balance.net)}`}>
-            {balance.net > 0 ? `+${balance.net} PKR` : `${balance.net} PKR`}
+          <p className={`balance-amount ${getColor(roundNet)}`}>
+            {roundNet > 0 ? `+${roundNet} PKR` : `${roundNet} PKR`}
           </p>
           <p className="balance-status">
-            {balance.net === 0 ? "Settled" : "Active"}
+            {roundNet === 0 ? "Settled" : "Active"}
           </p>
         </div>
       </div>

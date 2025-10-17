@@ -27,7 +27,7 @@ app.post(
 
     try {
       event = stripe.webhooks.constructEvent(
-        req.body, // will be Buffer now
+        req.body,
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       )
@@ -60,6 +60,27 @@ const io = new Server(server, {
   }
 })
 
+// ✅ FIXED: Safe connection logging
+io.engine.on("connection", (rawSocket) => {
+  console.log("🔗 Raw socket connection attempt");
+  const clientInfo = {
+    remoteAddress: rawSocket._socket?.remoteAddress || 'Unknown',
+    remotePort: rawSocket._socket?.remotePort || 'Unknown'
+  };
+  console.log("📡 Client info:", clientInfo);
+});
+
+// ✅ Add health check route
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    message: 'Server is running',
+    timestamp: new Date().toISOString(),
+    port: port
+  });
+});
+
+// Initialize socket controller
 socketController(io)
 const stripeRouter = require("./routes/stripe")(io)
 
@@ -71,5 +92,6 @@ app.use('/stripe', stripeRouter)
 app.use(dbErrorHandling)
 
 server.listen(port, () => {
-  console.log("Server is running on port", port)
+  console.log("🚀 Server is running on port", port)
+  console.log("✅ Health check available at: http://localhost:5500/health")
 })

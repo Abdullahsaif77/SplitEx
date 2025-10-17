@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import "../styles/settlementModel.css";
 import axios from "axios";
 
-const SettlementModal = ({ isOpen, onClose, onSave }) => {
+const SettlementModal = ({ isOpen, onClose, onSave ,  isSettlement }) => {
+  
+
   const [date, setDate] = useState("");
   const [groups, setGroups] = useState([]);
   const [Name, setName] = useState("");
@@ -53,6 +55,7 @@ const SettlementModal = ({ isOpen, onClose, onSave }) => {
     if (!selectedGroup) return;
     const picked = groups.find((g) => g.name === selectedGroup);
     setPickedGroup(picked);
+    console.log(picked)
 
     if (picked) {
       setFormData((prev) => ({
@@ -63,6 +66,7 @@ const SettlementModal = ({ isOpen, onClose, onSave }) => {
       }));
     }
   }, [selectedGroup, groups, payerId, Name]);
+  console.log(formData)
 
   // Save settlement (offline DB save)
   const handleSubmit = async (event) => {
@@ -70,13 +74,14 @@ const SettlementModal = ({ isOpen, onClose, onSave }) => {
 
     const finalData = {
       groupId: formData.groupId,
-      payer: formData.payer,
-      receiver: formData.receiver,
+      payer: formData.payer.userId,        // ✅ send only ID
+    receiver: formData.receiver.userId,
       amount: parseFloat(formData.amount) || 0,
       createdBy: formData.createdBy,
       currency: "PKR",
       date,
     };
+    console.log(finalData)
 
     try {
       const token = localStorage.getItem("token");
@@ -86,15 +91,16 @@ const SettlementModal = ({ isOpen, onClose, onSave }) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      if (response.status === 200) {
+      if (response.status == 200) {
         console.log("Settlement saved:", response.data);
+        onSave(response.data.settlement);
+        onClose();
       }
     } catch (error) {
       console.error("Error saving settlement:", error.response?.data || error);
     }
 
-    onSave(finalData);
-    onClose();
+   
   };
 
   // Stripe payment
@@ -123,6 +129,7 @@ const SettlementModal = ({ isOpen, onClose, onSave }) => {
   };
 
   if (!isOpen) return null;
+  console.log(selectedGroup)
 
   return (
     <div className="settlementOverlay" onClick={onClose}>

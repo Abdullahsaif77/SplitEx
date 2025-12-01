@@ -17,7 +17,7 @@ const port = 5500
 const app = express()
 const server = http.createServer(app)
 
-// ✅ Webhook FIRST — must come before express.json()
+
 app.post(
   "/stripe/webhook",
   bodyParser.raw({ type: "application/json" }),
@@ -41,7 +41,7 @@ app.post(
   }
 )
 
-// ✅ Now parse JSON for all other routes
+
 app.use(express.json())
 
 connectDB()
@@ -60,9 +60,9 @@ const io = new Server(server, {
   }
 })
 
-// ✅ FIXED: Safe connection logging
+
 io.engine.on("connection", (rawSocket) => {
-  console.log("🔗 Raw socket connection attempt");
+  console.log("Raw socket connection attempt");
   const clientInfo = {
     remoteAddress: rawSocket._socket?.remoteAddress || 'Unknown',
     remotePort: rawSocket._socket?.remotePort || 'Unknown'
@@ -70,7 +70,6 @@ io.engine.on("connection", (rawSocket) => {
   console.log("📡 Client info:", clientInfo);
 });
 
-// ✅ Add health check route
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'OK', 
@@ -80,7 +79,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Initialize socket controller
+
 socketController(io)
 const stripeRouter = require("./routes/stripe")(io)
 

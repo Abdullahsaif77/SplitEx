@@ -3,22 +3,22 @@ module.exports = (io, socket) => {
     try {
       console.log(`📩 Chat message from ${socket.userId} in group ${groupId}:`, message);
 
-      // Validate input
+      
       if (!groupId || !message) {
         return socket.emit("error", { message: "Missing groupId or message" });
       }
 
-      // ✅ Enhanced message with proper user info
+     
       const enhancedMessage = {
         ...message,
-        userId: socket.userId, // Actual user ID from authentication
-        sender: socket.userId, // Use this to identify if message is from current user
+        userId: socket.userId, 
+        sender: socket.userId, 
         text: message.text,
         timestamp: new Date().toISOString(),
-        isOwnMessage: false // This will help frontend identify message ownership
+        isOwnMessage: false 
       };
 
-      // Broadcast to room (including sender)
+      
       io.to(groupId).emit("Chatmessage", { 
         groupId, 
         message: enhancedMessage 

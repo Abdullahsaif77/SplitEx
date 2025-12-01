@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/createGroup.css";
 import AddFriend from "./AddFriend";
 import axios from 'axios'
+import { motion, AnimatePresence } from "framer-motion";
 
 const CreateGroup = ({ isOpen, onClose }) => {
   const [groupData, setgroupData] = useState({
@@ -29,7 +30,8 @@ const CreateGroup = ({ isOpen, onClose }) => {
         alert("Something is broken in backend")
        }
        if(response.status === 200){
-        console.log("Group is created successfull")
+        console.log("Group is created successfully")
+        onClose(); // Close modal on success
        }
     }
     catch(error){
@@ -52,63 +54,140 @@ const CreateGroup = ({ isOpen, onClose }) => {
     }));
   };
 
-  
   const updateMember = (index, field, value) => {
     const updated = [...groupData.members];
     updated[index][field] = value;
     setgroupData({ ...groupData, members: updated });
   };
-  console.log(groupData)
 
   if (!isOpen) return null;
 
   return (
-    <div className="modelLayout">
-      <div className="modelInfo ">
-        <div className="Head">
-          <h3>Create Group</h3>
+    <motion.div 
+      className="modal-overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      <motion.div 
+        className="modal-content glass-card"
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="modal-header">
+          <motion.h3 
+            className="modal-title"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            Create New Group
+          </motion.h3>
+          <motion.button 
+            className="close-btn"
+            onClick={onClose}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </motion.button>
         </div>
 
-        <form>
-          <p className="text-dark ms-4 mt-3">Name</p>
-          <input
-            type="text"
-            className="ms-4 ps-3 py-2"
-            placeholder="Enter name"
-            value={groupData.name}
-            onChange={(e) =>
-              setgroupData({ ...groupData, name: e.target.value })
-            }
-          />
-
-          <p className="text-dark ms-4 mt-3">Add members</p>
-
-          
-          {groupData.members.map((member, index) => (
-            <AddFriend
-              key={member._id}
-              member={member}
-              onChange={(field, value) => updateMember(index, field, value)}
-              onRemove={() => {
-                const updated = groupData.members.filter((_, i) => i !== index);
-                setgroupData({ ...groupData, members: updated });
-              }}
+        {/* Form */}
+        <form className="modal-form">
+          <motion.div 
+            className="form-group"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <label className="form-label">Group Name</label>
+            <input
+              type="text"
+              className="form-input"
+              placeholder="Enter group name"
+              value={groupData.name}
+              onChange={(e) =>
+                setgroupData({ ...groupData, name: e.target.value })
+              }
             />
-          ))}
+          </motion.div>
 
-          <button className="boom" onClick={HandleMember}>
-            Add group member
-          </button>
+          <motion.div 
+            className="form-group"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <label className="form-label">Add Members</label>
+            
+            <AnimatePresence>
+              {groupData.members.map((member, index) => (
+                <motion.div
+                  key={member._id}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <AddFriend
+                    member={member}
+                    onChange={(field, value) => updateMember(index, field, value)}
+                    onRemove={() => {
+                      const updated = groupData.members.filter((_, i) => i !== index);
+                      setgroupData({ ...groupData, members: updated });
+                    }}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+
+            <motion.button 
+              className="add-member-btn"
+              onClick={HandleMember}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+              Add Group Member
+            </motion.button>
+          </motion.div>
         </form>
 
-        <div className="foot">
-          <button onClick={onClose}>cancel</button>
-          <button onClick={handleSubmit}>
-            create
-          </button>
-        </div>
-      </div>
-    </div>
+        {/* Footer */}
+        <motion.div 
+          className="modal-footer"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <motion.button 
+            className="cancel-btn"
+            onClick={onClose}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Cancel
+          </motion.button>
+          <motion.button 
+            className="create-btn"
+            onClick={handleSubmit}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Create Group
+          </motion.button>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 

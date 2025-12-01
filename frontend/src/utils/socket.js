@@ -1,4 +1,4 @@
-// utils/socket.js
+
 import { io } from "socket.io-client";
 
 const BASE_URL = "http://localhost:5500";
@@ -18,7 +18,7 @@ export const createSocket = (token) => {
     reconnectionDelay: 1000,
   });
 
-  // Connection events
+  
   socket.on("connect", () => {
     console.log("✅ Socket connected successfully! ID:", socket.id);
   });

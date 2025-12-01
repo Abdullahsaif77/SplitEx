@@ -1,61 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
-import Home from "../pages/Home"
-import Groups from "../pages/Groups"
-import Expenses from "../pages/Expenses"
-import Friends from "../pages/Users"
-import Balances from "../pages/Balances"
-import Settlements from "../pages/Settlements"
+import Home from "../pages/Home";
+import Groups from "../pages/Groups";
+import Expenses from "../pages/Expenses";
+import Friends from "../pages/Users";
+import Balances from "../pages/Balances";
+import Settlements from "../pages/Settlements";
 import { PageContext } from "../apis/Context";
-import { useContext } from "react";
-
+import "../styles/Dashboard.css"
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { ActivePage } =  useContext(PageContext);
+  const { ActivePage } = useContext(PageContext);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const render = ()=>{
-    if(ActivePage == "Home"){
-      return <Home/>
-    }else if(ActivePage == "Groups"){
-      return <Groups/>
-    }else if(ActivePage == "Expenses"){
-      return <Expenses/>
-    }else if(ActivePage == "Friends"){
-      return <Friends/>
-    }else if(ActivePage == "Balances"){
-      return <Balances/>
-    }else if(ActivePage == "Settlements"){
-      return <Settlements/>
-    }else{
-      return <Home/>
-    }
-  }
- 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+    };
+    
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-  const closeSidebar = () => {
-    setIsSidebarOpen(false);
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const closeSidebar = () => setIsSidebarOpen(false);
+
+  const renderPage = () => {
+    const pages = {
+      Home: <Home />,
+      Groups: <Groups />,
+      Expenses: <Expenses />,
+      Friends: <Friends />,
+      Balances: <Balances />,
+      Settlements: <Settlements />
+    };
+    return pages[ActivePage] || <Home />;
   };
 
   return (
-   
-    <div className="row g-0">
-      <div className={`col-2 col-md-2 sidebar-container ${isSidebarOpen ? "open" : ""}`}>
+    <div className="dashboard-layout">
+      {/* Background Elements */}
+      <div className="background-gradients">
+        <div className="gradient-circle-1"></div>
+        <div className="gradient-circle-2"></div>
+        <div className="gradient-circle-3"></div>
+      </div>
+
+      {/* Mobile Overlay */}
+      {isSidebarOpen && isMobile && (
+        <div className="sidebar-overlay" onClick={closeSidebar} />
+      )}
+
+      {/* Sidebar */}
+      <div className={`sidebar-container ${isSidebarOpen ? "sidebar-open" : ""}`}>
         <Sidebar closeSidebar={closeSidebar} />
       </div>
-      
-      <div className="col">
+
+      {/* Main Content Area */}
+      <div className={`main-content-area ${isMobile ? 'mobile-view' : ''}`}>
         <Navbar toggleSidebar={toggleSidebar} />
-        <div className="p-3">
-         {render()};
+        
+        {/* Content wrapper */}
+        <div className="content-wrapper">
+          <div className="page-content">
+            {renderPage()}
+          </div>
         </div>
       </div>
     </div>
-    
   );
 };
 

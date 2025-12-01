@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "../styles/ExpenseModel.css";
 import axios from "axios";
+import { motion, AnimatePresence } from "framer-motion";
 
 const ExpenseModal = ({ isOpen, onClose, formData, setformData, isExpense }) => {
   const isVisible = isOpen || isExpense
 
-  if(!isVisible) return null
+  if (!isVisible) return null
 
   const [groups, setGroups] = useState([]);
   const [selectGroup, setSelectGroup] = useState(null);
@@ -77,20 +78,54 @@ const ExpenseModal = ({ isOpen, onClose, formData, setformData, isExpense }) => 
   };
 
   return (
-    <div className="modalOverlay" onClick={onClose}>
-      <div
-        className="modalContent premiumAnimate"
+    <motion.div
+      className="modal-overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      <motion.div
+        className="modal-content glass-card"
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="modalTitle">✨ New Expense</h2>
+        {/* Header */}
+        <div className="modal-header">
+          <motion.h3
+            className="modal-title"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            ✨ New Expense
+          </motion.h3>
+          <motion.button
+            className="close-btn"
+            onClick={onClose}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </motion.button>
+        </div>
 
-        <form onSubmit={handleSubmit}>
-          {/* Description */}
-          <div className="formGroup">
-            <label htmlFor="description">Description</label>
+        {/* Form */}
+        <form className="modal-form" onSubmit={handleSubmit}>
+          <motion.div
+            className="form-group"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <label className="form-label">Description</label>
             <input
-              id="description"
               type="text"
+              className="form-input"
               placeholder="e.g. Pizza, Hotel bill..."
               value={formData.description || ""}
               onChange={(e) =>
@@ -100,13 +135,17 @@ const ExpenseModal = ({ isOpen, onClose, formData, setformData, isExpense }) => 
                 }))
               }
             />
-          </div>
+          </motion.div>
 
-          {/* Group Selection */}
-          <div className="formGroup">
-            <label htmlFor="group">Group</label>
+          <motion.div
+            className="form-group"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.25 }}
+          >
+            <label className="form-label">Group</label>
             <select
-              id="group"
+              className="form-input"
               value={formData.groupId || ""}
               onChange={handleGroupChange}
             >
@@ -119,13 +158,17 @@ const ExpenseModal = ({ isOpen, onClose, formData, setformData, isExpense }) => 
                 </option>
               ))}
             </select>
-          </div>
+          </motion.div>
 
-          {/* Payer Selection */}
-          <div className="formGroup">
-            <label htmlFor="payer">Paid by</label>
+          <motion.div
+            className="form-group"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <label className="form-label">Paid by</label>
             <select
-              id="payer"
+              className="form-input"
               value={formData.payer || ""}
               onChange={(e) => {
                 const payerId = e.target.value;
@@ -152,14 +195,18 @@ const ExpenseModal = ({ isOpen, onClose, formData, setformData, isExpense }) => 
                 </option>
               ))}
             </select>
-          </div>
+          </motion.div>
 
-          {/* Participants */}
-          <div className="formGroup">
-            <label>Participants</label>
-            <div className="participantsList">
+          <motion.div
+            className="form-group"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.35 }}
+          >
+            <label className="form-label">Participants</label>
+            <div className="participants-list">
               {selectGroup?.members?.map((member) => (
-                <label key={member.userId?._id} className="checkboxLabel">
+                <label key={member.userId?._id} className="checkbox-label">
                   <input
                     type="checkbox"
                     value={member.userId?._id}
@@ -190,27 +237,31 @@ const ExpenseModal = ({ isOpen, onClose, formData, setformData, isExpense }) => 
                           participants: prev.participants.filter(
                             (p) =>
                               p.userId !== selectedId ||
-                              selectedId === prev.payer // ✅ don’t remove payer
+                              selectedId === prev.payer // ✅ don't remove payer
                           ),
                         }));
                       }
                     }}
                   />
-                  <span className="customCheckbox"></span>
+                  <span className="custom-checkbox"></span>
                   {member.userId?.name}
                 </label>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Amount & Date */}
-          <div className="formRow">
-            <div className="formGroup">
-              <label htmlFor="amount">Amount</label>
-              <div className="inputWithCurrency">
+          <motion.div
+            className="form-row"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <div className="form-group">
+              <label className="form-label">Amount</label>
+              <div className="input-with-currency">
                 <input
-                  id="amount"
                   type="number"
+                  className="form-input"
                   placeholder="0.00"
                   value={formData.amount || ""}
                   onChange={(e) =>
@@ -221,7 +272,7 @@ const ExpenseModal = ({ isOpen, onClose, formData, setformData, isExpense }) => 
                   }
                 />
                 <select
-                  className="currencyDropdown"
+                  className="currency-dropdown"
                   value={formData.currency || "PKR"}
                   onChange={(e) =>
                     setformData((prev) => ({ ...prev, currency: e.target.value }))
@@ -234,23 +285,28 @@ const ExpenseModal = ({ isOpen, onClose, formData, setformData, isExpense }) => 
               </div>
             </div>
 
-            <div className="formGroup">
-              <label htmlFor="date">Date</label>
+            <div className="form-group">
+              <label className="form-label">Date</label>
               <input
-                id="date"
                 type="date"
+                className="form-input"
                 value={formData.date || ""}
                 onChange={(e) =>
                   setformData((prev) => ({ ...prev, date: e.target.value }))
                 }
               />
             </div>
-          </div>
+          </motion.div>
 
-          {/* Split Method */}
-          <div className="formGroup">
-            <label>Split Method</label>
+          <motion.div
+            className="form-group"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.45 }}
+          >
+            <label className="form-label">Split Method</label>
             <select
+              className="form-input"
               value={formData.split || "equal"}
               onChange={(e) =>
                 setformData((prev) => ({ ...prev, split: e.target.value }))
@@ -260,20 +316,37 @@ const ExpenseModal = ({ isOpen, onClose, formData, setformData, isExpense }) => 
               <option value="percentage">Percentage</option>
               <option value="exact">Exact</option>
             </select>
-          </div>
+          </motion.div>
 
           {/* Actions */}
-          <div className="actions">
-            <button type="button" className="cancelButton" onClick={onClose}>
+          <motion.div
+            className="modal-footer"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <motion.button
+              type="button"
+              className="cancel-btn"
+              onClick={onClose}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
               Cancel
-            </button>
-            <button type="submit" className="saveButton">
-              Save <span className="enterHint">↵ Enter</span>
-            </button>
-          </div>
+            </motion.button>
+            <motion.button
+              type="submit"
+              className="create-btn"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Save Expense
+              <span className="enter-hint">↵ Enter</span>
+            </motion.button>
+          </motion.div>
         </form>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

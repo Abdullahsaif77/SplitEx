@@ -1,12 +1,11 @@
 require("dotenv").config();
-const crypto = require("crypto");
 const axios = require("axios");
 
 // ✅ 1. Create raw payload as Buffer
 const payloadObj = {
   id: "evt_test_webhook",
   object: "event",
-  type: "payment_intent.succeeded",
+  type: "payment_succeeded", // generic event type
   data: {
     object: {
       id: "pi_test_123",
@@ -21,21 +20,10 @@ const payloadObj = {
 
 const payload = Buffer.from(JSON.stringify(payloadObj));
 
-// ✅ 2. Stripe signature
-const secret = process.env.STRIPE_WEBHOOK_SECRET;
-const timestamp = Math.floor(Date.now() / 1000);
-const sigPayload = `${timestamp}.${payload.toString()}`;
-const signature = crypto
-  .createHmac("sha256", secret)
-  .update(sigPayload, "utf8")
-  .digest("hex");
-const stripeSignature = `t=${timestamp},v1=${signature}`;
-
-// ✅ 3. Send raw Buffer
-axios.post("http://localhost:5500/stripe/webhook", payload, {
+// ✅ 2. Send raw Buffer to your backend webhook route
+axios.post("http://localhost:5500/webhook", payload, {
   headers: {
-    "Content-Type": "application/json",
-    "Stripe-Signature": stripeSignature
+    "Content-Type": "application/json"
   },
   transformRequest: [(data) => data] // keep as raw
 })

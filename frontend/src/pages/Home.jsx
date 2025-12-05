@@ -18,7 +18,7 @@ const Home = () => {
     const fetchBalance = async () => {
       try {
         const token = localStorage.getItem('token')
-        const response = await axios.get('http://localhost:5500/home',
+        const response = await axios.get('https://split-ex-backend.vercel.app/home',
           {
             headers: {
               authorization: `Bearer ${token}`

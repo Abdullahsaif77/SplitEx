@@ -34,7 +34,7 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5500/register", formData);
+      const response = await axios.post("https://split-ex-backend.vercel.app/register", formData);
 
       if (response.status === 201) {
         console.log("✅ Registration successful");

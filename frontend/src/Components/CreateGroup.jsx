@@ -18,7 +18,7 @@ const CreateGroup = ({ isOpen, onClose }) => {
         members : groupData.members
       }
       const token = localStorage.getItem('token')
-      const response = await axios.post('http://localhost:5500/group' , payload ,
+      const response = await axios.post('https://split-ex-backend.vercel.app/group' , payload ,
         {
           headers:{
             Authorization:`Bearer ${token}`

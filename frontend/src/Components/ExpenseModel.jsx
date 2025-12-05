@@ -17,7 +17,7 @@ const ExpenseModal = ({ isOpen, onClose, formData, setformData, isExpense }) => 
     const fetchGroups = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5500/groups", {
+        const response = await axios.get("https://split-ex-backend.vercel.app/groups", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -62,7 +62,7 @@ const ExpenseModal = ({ isOpen, onClose, formData, setformData, isExpense }) => 
       };
 
       const response = await axios.post(
-        `http://localhost:5500/group/${payload.groupId}/expenses`,
+        `https://split-ex-backend.vercel.app/group/${payload.groupId}/expenses`,
         payload,
         { headers: { Authorization: `Bearer ${token}` } }
       );

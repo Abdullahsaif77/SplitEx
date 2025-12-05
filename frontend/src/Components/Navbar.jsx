@@ -13,7 +13,7 @@ const Navbar = ({ toggleSidebar }) => {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem('token')
-        const response = await axios.get('http://localhost:5500/profile',
+        const response = await axios.get('https://split-ex-backend.vercel.app/profile',
           {
             headers: {
               authorization: `Bearer ${token}`

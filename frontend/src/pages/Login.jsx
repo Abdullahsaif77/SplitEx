@@ -28,12 +28,12 @@ function Register() {
   const handleLogin = async(e)=>{
     e.preventDefault();
     try{
-      const response  = await axios.post('http://localhost:5500/login',formData)
+      const response  = await axios.post('https://split-ex-backend.vercel.app/login',formData)
       if( response.status == 200){
         const token = response.data.token
         localStorage.setItem("token",token);
 
-        const verify = await axios.get('http://localhost:5500/profile',
+        const verify = await axios.get('https://split-ex-backend.vercel.app/profile',
           
           {
             headers:{

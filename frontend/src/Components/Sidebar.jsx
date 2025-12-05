@@ -42,7 +42,7 @@ const Sidebar = ({ closeSidebar }) => {
       // Optional: Send logout request to backend
       const token = localStorage.getItem('token');
       if (token) {
-        await axios.post('http://localhost:5500/logout', {}, {
+        await axios.post('https://split-ex-backend.vercel.app/logout', {}, {
           headers: {
             Authorization: `Bearer ${token}`
           }

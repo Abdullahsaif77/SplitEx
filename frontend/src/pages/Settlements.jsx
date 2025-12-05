@@ -16,7 +16,7 @@ const Settlements = () => {
             try {
                 setLoading(true);
                 const token = localStorage.getItem('token')
-                const response = await axios.get('http://localhost:5500/settlements',
+                const response = await axios.get('https://split-ex-backend.vercel.app/settlements',
                     {
                         headers: {
                             Authorization: `Bearer ${token}`

@@ -10,7 +10,7 @@ const AcceptInvite = () => {
     const acceptInvite = async () => {
       try {
         const res = await axios.post(
-          `http://localhost:5500/group/invite/accept/${token}`
+          `https://split-ex-backend.vercel.app/group/invite/accept/${token}`
         );
 
         if (res.data.action === "redirect_to_signup") {

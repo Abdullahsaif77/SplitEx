@@ -19,7 +19,7 @@ const Groups = () => {
   const handleOpen = async (group) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`http://localhost:5500/group/${group._id}`, {
+      const response = await axios.get(`https://split-ex-backend.vercel.app/group/${group._id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSelectedGroup(group); 
@@ -35,7 +35,7 @@ const Groups = () => {
       try {
         setLoading(true);
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5500/groups', {
+        const response = await axios.get('https://split-ex-backend.vercel.app/groups', {
           headers: {
             Authorization: `Bearer ${token}`
           }

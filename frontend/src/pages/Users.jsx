@@ -14,7 +14,7 @@ const [loading, setLoading] = useState(true)
   useEffect(()=>{
     const fetchFriends = async()=>{
       try{
-        const response = await axios.get('http://localhost:5500/friends')
+        const response = await axios.get('https://split-ex-backend.vercel.app/friends')
         if(!response){
           return console.log("Something is broken in backend")
           alert('Something is broken in backend')

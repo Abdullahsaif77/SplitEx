@@ -1,7 +1,7 @@
 
 import { io } from "socket.io-client";
 
-const BASE_URL = "http://localhost:5500";
+const BASE_URL = "https://split-ex-backend.vercel.app";
 
 export const createSocket = (token) => {
   console.log("🔄 Creating socket connection with token:", token ? "Present" : "Missing");
@@ -33,15 +33,15 @@ export const createSocket = (token) => {
   });
 
   socket.on("disconnect", (reason) => {
-    console.log("⚠️ Socket disconnected. Reason:", reason);
+    console.log("Socket disconnected. Reason:", reason);
   });
 
   socket.on("reconnect_attempt", (attempt) => {
-    console.log("🔄 Reconnection attempt:", attempt);
+    console.log("Reconnection attempt:", attempt);
   });
 
   socket.on("reconnect_failed", () => {
-    console.error("❌ All reconnection attempts failed");
+    console.error("All reconnection attempts failed");
   });
 
   return socket;

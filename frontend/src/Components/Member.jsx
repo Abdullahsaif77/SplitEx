@@ -15,7 +15,7 @@ const Member = ({ isOpen, setisOpen, group }) => {
     try {
       const token = localStorage.getItem('token')
       const response = await axios.post(
-        `http://localhost:5500/group/${group._id}/invite`, 
+        `https://split-ex-backend.vercel.app/group/${group._id}/invite`, 
         formData,
         {
           headers: {

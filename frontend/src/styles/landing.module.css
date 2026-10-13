@@ -1,15 +1,961 @@
+/* ============================================================
+   Palette & Master Base — "Editorial Fintech"
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+
 .landingPage {
-  background-color: #FFF7ED;
+  background-color: #F4EFE6;
+  color: #1A1A1A;
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
 }
 
-.bgCream {
-  background-color: #FFF7ED;
+/* ---------- Navbar ---------- */
+.glassNavbar {
+  background: rgba(244, 239, 230, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid #1A1A1A;
+  z-index: 1000;
 }
 
-.line {
-  background-color: rgb(91, 89, 89);
+.brandBadge {
+  background: #1A1A1A;
+  color: #F4EFE6;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+/* ---------- Buttons ---------- */
+.btnGradient {
+  background: #FF5B23 !important;
+  color: #1A1A1A !important;
+  border: 1.5px solid #1A1A1A !important;
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+  box-shadow: 3px 3px 0 #1A1A1A;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btnGradient:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 #1A1A1A;
+  background: #FF5B23 !important;
+  color: #1A1A1A !important;
+}
+
+/* ---------- Hero ---------- */
+.heroSection {
+  position: relative;
+  z-index: 1;
+  padding-top: 7rem;
+  padding-bottom: 4rem;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #FFD23F;
+  color: #1A1A1A;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.45rem 0.9rem;
+  border-radius: 4px;
+  border: 1.5px solid #1A1A1A;
+}
+
+.heroTitle {
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: #1A1A1A;
+}
+
+.gradientText {
+  color: #FF5B23;
+  font-style: italic;
+  font-weight: 800;
+}
+
+/* ---------- Hero Image ---------- */
+.imageWrapper {
+  position: relative;
+  display: inline-block;
+  transform: rotate(-2deg);
+}
+
+.floatingBadge {
+  position: absolute;
+  top: -18px;
+  left: 24px;
+  background: #FFD23F;
+  padding: 0.5rem 1rem;
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: #1A1A1A;
+  border: 1.5px solid #1A1A1A;
+  transform: rotate(4deg);
+  z-index: 2;
+}
+
+/* ---------- Marquee ---------- */
+.marqueeStrip {
+  background: #1A1A1A;
+  color: #F4EFE6;
+  padding: 1rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 1.5px solid #1A1A1A;
+  border-bottom: 1.5px solid #1A1A1A;
+}
+
+.marqueeTrack {
+  display: inline-block;
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  letter-spacing: 0.02em;
+  animation: marquee 40s linear infinite;
+}
+.marqueeTrack span { margin: 0 1.25rem; }
+.marqueeTrack .dot { color: #FF5B23; font-size: 0.75rem; vertical-align: middle; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ---------- Calculator ---------- */
+.calcSection {
+  position: relative;
+  z-index: 1;
+}
+
+.calcResultCard {
+  background: #0B6E4F;
+  color: #F4EFE6;
+  border: 1.5px solid #1A1A1A;
+  border-radius: 20px;
+  box-shadow: 6px 6px 0 #1A1A1A;
+}
+
+/* Range slider restyle */
+.form-range {
+  height: 1.5rem;
+}
+.form-range::-webkit-slider-thumb {
+  background: #FF5B23;
+  border: 1.5px solid #1A1A1A;
+  width: 22px;
+  height: 22px;
+  margin-top: -9px;
+  cursor: pointer;
+}
+.form-range::-webkit-slider-runnable-track {
+  background: #1A1A1A;
+  height: 4px;
+  border-radius: 999px;
+}
+.form-range::-moz-range-thumb {
+  background: #FF5B23;
+  border: 1.5px solid #1A1A1A;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+.form-range::-moz-range-track {
+  background: #1A1A1A;
+  height: 4px;
+  border-radius: 999px;
+}
+
+/* ---------- Steps & Features ---------- */
+.stepsSection,
+.featuresSection,
+.faqSection {
+  position: relative;
+  z-index: 1;
+}
+
+.featuresSection {
+  background-color: #F4EFE6;
+}
+
+.stepCard,
+.featureCard {
+  background: #FFFFFF !important;
+  border: 1.5px solid #1A1A1A !important;
+  border-radius: 16px !important;
+  box-shadow: 4px 4px 0 #1A1A1A;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.stepCard:hover,
+.featureCard:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0 #1A1A1A;
+}
+
+.stepNumber {
+  width: 48px;
+  height: 48px;
+  background: #FFD23F;
+  color: #1A1A1A;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1.5px solid #1A1A1A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconBox {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  border: 1.5px solid #1A1A1A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.iconEmerald { background: #FFD23F; }
+.iconIndigo  { background: #FF5B23; }
+.iconCyan    { background: #B8E6D5; }
+
+/* ---------- FAQ ---------- */
+.accordion-button {
+  font-size: 1.05rem;
+  padding: 1rem 0.5rem;
+}
+.accordion-button:not(.collapsed) {
+  background: #FFD23F !important;
+  color: #1A1A1A !important;
+  box-shadow: none !important;
+  border-radius: 8px;
+}
+.accordion-button:focus {
+  box-shadow: none !important;
+  border-color: transparent;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  position: relative;
+  z-index: 1;
+  background: #1A1A1A;
+  color: #F4EFE6;
+  border-top: 1.5px solid #1A1A1A;
+}
+.footer h5,
+.footer h6 {
+  color: #F4EFE6;
+}
+.footer a {
+  color: #F4EFE6;
+  transition: color 0.15s ease;
+}
+.footer a:hover {
+  color: #FF5B23;
+}
+.footer .brandBadge {
+  background: #F4EFE6;
+  color: #1A1A1A;
+}
+
+/* ============================================================
+   MOTION LAYER
+   ============================================================ */
+
+/* ---------- Scroll reveals ---------- */
+.revealIn {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.revealOut {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.revealUpIn {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.revealUpOut {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .revealIn, .revealOut, .revealUpIn, .revealUpOut {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .marqueeTrack,
+  .floatingBadge,
+  .iconFloat,
+  .pulseDot,
+  .glowingCard::before {
+    animation: none !important;
+  }
+}
+
+/* ---------- Buttons: arrow slide on hover ---------- */
+.btnArrow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.btnArrow .arrow {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.btnArrow:hover .arrow {
+  transform: translateX(5px);
+}
+
+.btnHollow {
+  position: relative;
+  border: 1.5px solid #1A1A1A !important;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+.btnHollow:hover {
+  background: #1A1A1A !important;
+  color: #F4EFE6 !important;
+  transform: translateY(-2px);
+}
+
+/* ---------- Floating tape sticker ---------- */
+.floatingBadge {
+  animation: wiggle 5s ease-in-out infinite;
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(4deg) translateY(0); }
+  50%      { transform: rotate(2deg) translateY(-4px); }
+}
+
+/* ---------- Image wrapper: subtle drift ---------- */
+.imageWrapper {
+  animation: drift 8s ease-in-out infinite;
+}
+@keyframes drift {
+  0%, 100% { transform: rotate(-2deg) translateY(0); }
+  50%      { transform: rotate(-1.5deg) translateY(-8px); }
+}
+
+/* ---------- Marquee (already defined, keep) ---------- */
+.marqueeTrack {
+  animation: marquee 40s linear infinite;
+}
+.marqueeStrip:hover .marqueeTrack {
+  animation-play-state: paused;
+}
+
+/* ---------- Pulse dot next to "Live" ---------- */
+.pulseDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FF5B23;
+  margin-right: 6px;
+  vertical-align: middle;
+  position: relative;
+  animation: pulseDot 1.6s ease-in-out infinite;
+}
+.pulseDot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: #FF5B23;
+  opacity: 0.35;
+  animation: pulseRing 1.6s ease-out infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+@keyframes pulseRing {
+  0%   { transform: scale(0.8); opacity: 0.5; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* ---------- Feature icon gentle float ---------- */
+.iconFloat {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.featureCard:hover .iconFloat {
+  transform: translateY(-4px) rotate(-4deg);
+}
+
+/* ---------- Calculator: number pop on change ---------- */
+.popNumber {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.popNumber:hover {
+  transform: scale(1.02);
+}
+
+/* ---------- Calculator result card: soft glow pulse ---------- */
+.glowingCard {
+  position: relative;
+  overflow: hidden;
+}
+.glowingCard::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 210, 63, 0.35), transparent 60%);
+  opacity: 0.8;
+  animation: glowDrift 8s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+.glowingCard > * {
+  position: relative;
+  z-index: 1;
+}
+@keyframes glowDrift {
+  0%   { transform: translate(-10%, -10%); }
+  100% { transform: translate(15%, 15%); }
+}
+
+/* ---------- Slider: thumb pop on interaction ---------- */
+.slider::-webkit-slider-thumb {
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.slider:hover::-webkit-slider-thumb,
+.slider:active::-webkit-slider-thumb {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 6px rgba(255, 91, 35, 0.18);
+}
+.slider::-moz-range-thumb {
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.slider:hover::-moz-range-thumb,
+.slider:active::-moz-range-thumb {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 6px rgba(255, 91, 35, 0.18);
+}
+
+/* ---------- Step number: subtle tick on hover ---------- */
+.stepCard:hover .stepNumber {
+  animation: tickNumber 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes tickNumber {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(-6deg) scale(1.08); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* ---------- Navbar: fade in on mount ---------- */
+.glassNavbar {
+  animation: navFade 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes navFade {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- FAQ accordion body fade ---------- */
+.accordion-collapse {
+  transition: height 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.accordion-body {
+  animation: bodyFade 0.35s ease both;
+}
+@keyframes bodyFade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Final CTA section background accent ---------- */
+.ctaSection {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 0 6rem;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 91, 35, 0.08), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(11, 110, 79, 0.08), transparent 45%),
+    #F4EFE6;
+  border-top: 1.5px solid #1A1A1A;
+}
+/* ============================================================
+   REGISTER — clean editorial, fits one viewport
+   ============================================================ */
+
+.regPage {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  background-color: #F4EFE6;
+  color: #1A1A1A;
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  animation: navFade 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (max-width: 1000px) {
+  .regPage {
+    height: auto;
+    max-height: none;
+    overflow: auto;
+  }
+}
+
+/* ---------- Top bar ---------- */
+.regTopBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 2rem;
+  border-bottom: 1.5px solid #1A1A1A;
+  background: #F4EFE6;
+  flex-shrink: 0;
+}
+@media (max-width: 700px) {
+  .regTopBar { padding: 0.75rem 1.25rem; }
+}
+
+.authBack {
+  background: none;
+  border: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #1A1A1A;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.15s ease;
+}
+.authBack:hover { background: rgba(26, 26, 26, 0.06); }
+.authBack .arrow {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.authBack:hover .arrow {
+  transform: rotate(180deg) translateX(3px) !important;
+}
+
+.regStep {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #8A817C;
+}
+
+/* ---------- Grid ---------- */
+.regGrid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 0;
+}
+@media (max-width: 1000px) {
+  .regGrid { grid-template-columns: 1fr; min-height: auto; }
+}
+
+/* ---------- LEFT: form ---------- */
+.regForm {
+  padding: clamp(1.5rem, 4vh, 3rem) clamp(1.5rem, 4vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.6vh, 1.25rem);
+  border-right: 1.5px solid #1A1A1A;
+  overflow-y: auto;
+  min-height: 0;
+  max-width: 560px;
+  width: 100%;
+  margin-left: auto;
+}
+@media (max-width: 1000px) {
+  .regForm {
+    border-right: none;
+    border-bottom: 1.5px solid #1A1A1A;
+    overflow-y: visible;
+    max-width: none;
+    margin-left: 0;
+  }
+}
+
+/* Headline */
+.regHeadline {
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: #1A1A1A;
+}
+.regHeadlineAccent {
+  font-style: italic;
+  color: #FF5B23;
+}
+
+.regLede {
+  color: #4A4540;
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+/* Invite stamp */
+.regStamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  background: #1A1A1A;
+  color: #FFD23F;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 0.35rem 0.7rem;
+  border-radius: 4px;
+}
+.regStamp strong { color: #FFFFFF; }
+
+/* ---------- Fields ---------- */
+.regFields {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.65rem, 1.4vh, 1rem);
+  margin-top: 0.25rem;
+}
+
+.regField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  cursor: text;
+}
+
+.regFieldLabel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8A817C;
+  transition: color 0.15s ease;
+}
+.regField:focus-within .regFieldLabel { color: #FF5B23; }
+
+.regInput {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid #1A1A1A;
+  background: transparent;
+  padding: 0.35rem 0 0.5rem;
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #1A1A1A;
+  outline: none;
+  caret-color: #FF5B23;
+  transition: border-color 0.2s ease;
+}
+.regInput::placeholder {
+  color: #C9C1B6;
+  font-weight: 400;
+  font-style: italic;
+}
+.regField:focus-within .regInput { border-bottom-color: #FF5B23; }
+
+/* Strength meter */
+.regMeter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.4rem;
+}
+.regMeterBars { display: flex; gap: 3px; }
+.regMeterBar {
+  width: 18px;
+  height: 3px;
+  border-radius: 999px;
+  background: #E2DACE;
+  transition: background-color 0.25s ease;
+}
+.regMeterBarOn { background: #FF5B23; }
+.regMeter[data-score="1"] .regMeterBarOn { background: #D94A17; }
+.regMeter[data-score="2"] .regMeterBarOn { background: #F08A00; }
+.regMeter[data-score="3"] .regMeterBarOn { background: #FFD23F; }
+.regMeter[data-score="4"] .regMeterBarOn { background: #0B6E4F; }
+
+.regMeterLabel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8A817C;
+}
+
+/* Checkbox */
+.regCheck {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  user-select: none;
+  padding-top: 0.25rem;
+}
+.regCheck input { display: none; }
+.regCheckBox {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #1A1A1A;
+  border-radius: 3px;
+  background: #FFFFFF;
+  position: relative;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease;
+}
+.regCheck input:checked + .regCheckBox { background: #FF5B23; }
+.regCheck input:checked + .regCheckBox::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid #1A1A1A;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.regCheckText {
+  font-size: 0.82rem;
+  color: #4A4540;
+  line-height: 1.35;
+}
+
+/* Error */
+.regError {
+  background: #FFE4DC;
+  border-left: 4px solid #FF5B23;
+  color: #8A1F00;
+  border-radius: 4px;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+/* Submit */
+.regSubmit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  background: #FF5B23;
+  color: #1A1A1A;
+  border: 1.5px solid #1A1A1A;
+  border-radius: 999px;
+  padding: 0.8rem 1.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 #1A1A1A;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+  margin-top: 0.25rem;
+}
+.regSubmit:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 #1A1A1A;
+}
+.regSubmit:disabled {
+  cursor: progress;
+  background: #1A1A1A;
+  color: #FFD23F;
+  box-shadow: 3px 3px 0 #FF5B23;
+}
+.regSubmitArrow {
+  font-size: 1rem;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.regSubmit:hover:not(:disabled) .regSubmitArrow { transform: translateX(4px); }
+
+/* Fine print */
+.regFine {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: #8A817C;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+.regFineLink {
+  color: #1A1A1A;
+  text-decoration: none;
+  border-bottom: 1px solid #C9C1B6;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.regFineLink:hover { border-color: #FF5B23; color: #FF5B23; }
+.regFineDot { margin: 0 0.4rem; color: #C9C1B6; }
+
+/* ============================================================
+   RIGHT PANEL — receipt
+   ============================================================ */
+
+.regAside {
+  position: relative;
+  background: #1A1A1A;
+  padding: clamp(1.5rem, 3vh, 2.5rem) 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.regReceipt {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  background: #FDFBF6;
+  color: #1A1A1A;
+  padding: 1.35rem 1.4rem 1.1rem;
+  font-family: 'JetBrains Mono', monospace;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  transform: rotate(-1.5deg);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.regReceipt:hover { transform: rotate(0deg); }
+
+.regReceiptHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.regReceiptBrand {
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+}
+.regReceiptNo {
+  font-size: 0.55rem;
+  color: #8A817C;
+  letter-spacing: 0.08em;
+}
+
+.regReceiptRule {
   height: 1px;
-  margin-top: 50px;
-  margin-left: 50px;
-  margin-right: 50px;
+  background: repeating-linear-gradient(
+    to right,
+    #1A1A1A 0, #1A1A1A 3px,
+    transparent 3px, transparent 7px
+  );
+  margin: 0.7rem 0;
+  opacity: 0.3;
+}
+
+.regReceiptRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.regReceiptLabel {
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  color: #8A817C;
+  margin: 0;
+}
+.regReceiptTotal {
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  font-size: 1.7rem;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 0;
+  color: #1A1A1A;
+}
+.regReceiptTotal small {
+  font-size: 0.7rem;
+  opacity: 0.5;
+  font-weight: 600;
+}
+
+.regReceiptLines {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.regReceiptLine {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.68rem;
+}
+.regReceiptName { font-weight: 700; }
+.regReceiptDots {
+  border-bottom: 1px dotted #B8B0A8;
+  height: 1px;
+  transform: translateY(-2px);
+}
+.regReceiptVal { font-weight: 700; }
+.regReceiptPaid,
+.regReceiptDue {
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+.regReceiptPaid { background: #0B6E4F; color: #FDFBF6; }
+.regReceiptDue  { background: #FF5B23; color: #1A1A1A; }
+
+.regReceiptFoot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  color: #8A817C;
 }

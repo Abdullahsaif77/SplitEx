@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
-import {
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBCardImage,
-  MDBInput,
-  MDBIcon,
-  MDBCheckbox,
-} from 'mdb-react-ui-kit';
+import React, { useState, useMemo } from "react";
+import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
+import styles from "../styles/landing.module.css";
 
-function Register() {
+const scorePassword = (pw) => {
+  if (!pw) return 0;
+  let s = 0;
+  if (pw.length >= 8) s++;
+  if (/[A-Z]/.test(pw)) s++;
+  if (/[0-9]/.test(pw)) s++;
+  if (/[^A-Za-z0-9]/.test(pw)) s++;
+  return s;
+};
+
+const STRENGTH_LABELS = ["Too short", "Weak", "Okay", "Strong", "Solid"];
+
+const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ✅ Extract groupId and token from URL (if user came via invite)
   const searchParams = new URLSearchParams(location.search);
   const groupId = searchParams.get("groupId");
   const token = searchParams.get("token");
@@ -27,108 +27,223 @@ function Register() {
     name: "",
     email: "",
     passwordHash: "",
-    groupId: groupId || null,   // auto-fill if present
+    groupId: groupId || null,
     token: token || null,
   });
+  const [subscribe, setSubscribe] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const pwScore = useMemo(() => scorePassword(formData.passwordHash), [formData.passwordHash]);
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+  const isValidName = formData.name.trim().length >= 2;
+  const isValidPw = formData.passwordHash.length >= 8;
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setError("");
+    if (!isValidName || !isValidEmail || !isValidPw) {
+      setError("Please fill in all fields correctly.");
+      return;
+    }
+    setLoading(true);
     try {
-      const response = await axios.post("https://split-ex-backend.vercel.app/register", formData);
-
+      const response = await axios.post(
+        "http://localhost:5500/register",
+        { ...formData, subscribe }
+      );
       if (response.status === 201) {
-        console.log("✅ Registration successful");
-        alert(response.data.message);
         navigate("/login");
       } else {
-        console.log("❌ Error");
+        setError("Something went wrong. Please try again.");
       }
-    } catch (error) {
-      console.error("❌ Error registering user:", error);
-      alert("Registration failed. Check console for details.");
+    } catch (err) {
+      setError(err?.response?.data?.message || "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
+  const update = (field) => (e) =>
+    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+
   return (
-    <MDBContainer fluid>
-      <MDBCard className="text-black m-5" style={{ borderRadius: "25px" }}>
-        <MDBCardBody>
-          <MDBRow>
-            <MDBCol
-              md="10"
-              lg="6"
-              className="order-2 order-lg-1 d-flex flex-column align-items-center"
-            >
-              <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
-                Sign up
-              </p>
+    <div className={styles.regPage}>
+      {/* Top bar */}
+      <div className={styles.regTopBar}>
+        <button type="button" className={styles.authBack} onClick={() => navigate("/")}>
+          <span className={styles.arrow} style={{ transform: "rotate(180deg)" }}>→</span>
+          Back
+        </button>
+        <span className={styles.regStep}>New account</span>
+      </div>
 
-              <div className="d-flex flex-row align-items-center mb-4 ">
-                <MDBIcon fas icon="user me-3" size="lg" />
-                <MDBInput
-                  label="Your Name"
-                  id="form1"
-                  type="text"
-                  className="w-100"
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                />
-              </div>
+      <div className={styles.regGrid}>
+        {/* LEFT: form */}
+        <section className={styles.regForm}>
+          <h1 className={styles.regHeadline}>
+            Start your{" "}
+            <span className={styles.regHeadlineAccent}>first group.</span>
+          </h1>
 
-              <div className="d-flex flex-row align-items-center mb-4">
-                <MDBIcon fas icon="envelope me-3" size="lg" />
-                <MDBInput
-                  label="Your Email"
-                  id="form2"
-                  type="email"
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                />
-              </div>
+          {groupId ? (
+            <div className={styles.regStamp}>
+              <span className={styles.pulseDot} />
+              Invite&nbsp;<strong>{String(groupId).slice(0, 8).toUpperCase()}</strong>
+            </div>
+          ) : (
+            <p className={styles.regLede}>
+              One account. Unlimited groups. No card required.
+            </p>
+          )}
 
-              <div className="d-flex flex-row align-items-center mb-4">
-                <MDBIcon fas icon="lock me-3" size="lg" />
-                <MDBInput
-                  label="Password"
-                  id="form3"
-                  type="password"
-                  onChange={(e) =>
-                    setFormData({ ...formData, passwordHash: e.target.value })
-                  }
-                />
-              </div>
-
-              <div className="mb-4">
-                <MDBCheckbox
-                  name="flexCheck"
-                  value=""
-                  id="flexCheckDefault"
-                  label="Subscribe to our newsletter"
-                />
-              </div>
-
-              <MDBBtn className="mb-4" size="lg" onClick={handleRegister}>
-                Register
-              </MDBBtn>
-            </MDBCol>
-
-            <MDBCol
-              md="10"
-              lg="6"
-              className="order-1 order-lg-2 d-flex align-items-center"
-            >
-              <MDBCardImage
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                fluid
+          <form className={styles.regFields} onSubmit={handleRegister} noValidate>
+            <label className={styles.regField}>
+              <span className={styles.regFieldLabel}>Full name</span>
+              <input
+                className={styles.regInput}
+                type="text"
+                autoComplete="name"
+                placeholder="Alex Rivera"
+                value={formData.name}
+                onChange={update("name")}
               />
-            </MDBCol>
-          </MDBRow>
-        </MDBCardBody>
-      </MDBCard>
-    </MDBContainer>
+            </label>
+
+            <label className={styles.regField}>
+              <span className={styles.regFieldLabel}>Email</span>
+              <input
+                className={styles.regInput}
+                type="email"
+                autoComplete="email"
+                placeholder="you@example.com"
+                value={formData.email}
+                onChange={update("email")}
+              />
+            </label>
+
+            <label className={styles.regField}>
+              <span className={styles.regFieldLabel}>Password</span>
+              <input
+                className={styles.regInput}
+                type="password"
+                autoComplete="new-password"
+                placeholder="At least 8 characters"
+                value={formData.passwordHash}
+                onChange={update("passwordHash")}
+              />
+              {formData.passwordHash.length > 0 && (
+                <div className={styles.regMeter} data-score={pwScore}>
+                  <div className={styles.regMeterBars}>
+                    {[1, 2, 3, 4].map((i) => (
+                      <span
+                        key={i}
+                        className={`${styles.regMeterBar} ${
+                          pwScore >= i ? styles.regMeterBarOn : ""
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className={styles.regMeterLabel}>
+                    {STRENGTH_LABELS[pwScore]}
+                  </span>
+                </div>
+              )}
+            </label>
+
+            <label className={styles.regCheck}>
+              <input
+                type="checkbox"
+                checked={subscribe}
+                onChange={(e) => setSubscribe(e.target.checked)}
+              />
+              <span className={styles.regCheckBox} aria-hidden="true" />
+              <span className={styles.regCheckText}>
+                Send me occasional product updates
+              </span>
+            </label>
+
+            {error && (
+              <div className={styles.regError} role="alert">
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className={styles.regSubmit}
+            >
+              {loading ? "Creating account…" : "Create account"}
+              {!loading && <span className={styles.regSubmitArrow}>→</span>}
+            </button>
+          </form>
+
+          <p className={styles.regFine}>
+            Already have an account?{" "}
+            <a href="/login" className={styles.regFineLink}>Sign in</a>
+            <span className={styles.regFineDot}>·</span>
+            <a href="#" className={styles.regFineLink}>Terms</a>
+            <span className={styles.regFineDot}>·</span>
+            <a href="#" className={styles.regFineLink}>Privacy</a>
+          </p>
+        </section>
+
+        {/* RIGHT: receipt */}
+        <aside className={styles.regAside} aria-hidden="true">
+          <div className={styles.regReceipt}>
+            <div className={styles.regReceiptHead}>
+              <span className={styles.regReceiptBrand}>SPLITEX</span>
+              <span className={styles.regReceiptNo}>
+                NO. {String(Date.now()).slice(-5)}
+              </span>
+            </div>
+
+            <div className={styles.regReceiptRule} />
+
+            <div className={styles.regReceiptRow}>
+              <p className={styles.regReceiptLabel}>TABLE OF 4 · DINNER</p>
+              <p className={styles.regReceiptTotal}>
+                $<span>248</span>
+                <small>.00</small>
+              </p>
+            </div>
+
+            <div className={styles.regReceiptRule} />
+
+            <ul className={styles.regReceiptLines}>
+              {[
+                { n: "Alex", v: 62.0, p: true },
+                { n: "Sam", v: 62.0, p: true },
+                { n: "Jules", v: 62.0, p: false },
+                { n: "Riley", v: 62.0, p: false },
+              ].map((p) => (
+                <li key={p.n} className={styles.regReceiptLine}>
+                  <span className={styles.regReceiptName}>{p.n}</span>
+                  <span className={styles.regReceiptDots} />
+                  <span className={styles.regReceiptVal}>${p.v.toFixed(2)}</span>
+                  <span
+                    className={
+                      p.p ? styles.regReceiptPaid : styles.regReceiptDue
+                    }
+                  >
+                    {p.p ? "PAID" : "DUE"}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <div className={styles.regReceiptRule} />
+
+            <div className={styles.regReceiptFoot}>
+              <span>THANK YOU</span>
+              <span>· SPLIT &amp; SETTLED ·</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
   );
-}
+};
 
 export default Register;

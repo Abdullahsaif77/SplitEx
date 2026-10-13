@@ -1,109 +1,260 @@
-/* Dashboard.css - SIMPLE FIX */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ============================================================
+   DASHBOARD — Editorial Fintech shell
+   ============================================================ */
+
+:root {
+  --paper: #F4EFE6;
+  --paper-2: #FDFBF6;
+  --ink: #1A1A1A;
+  --ink-soft: #4A4540;
+  --muted: #8A817C;
+  --hairline: #1A1A1A;
+  --rule: #E2DACE;
+  --tangerine: #FF5B23;
+  --mustard: #FFD23F;
+  --forest: #0B6E4F;
+  --forest-soft: #B8E6D5;
 }
 
-/* MAIN LAYOUT */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+
+/* ---------- Root layout ---------- */
 .dashboard-layout {
-  min-height: 100vh;
-  width: 100%;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   position: relative;
-  overflow: hidden;
+  display: flex;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
 }
 
-/* Background Elements */
-.background-gradients {
+/* Subtle paper grain overlay (replaces blurred gradients) */
+.paper-grain {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+  inset: 0;
   pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+  background-image:
+    radial-gradient(rgba(26, 26, 26, 0.06) 1px, transparent 1px),
+    radial-gradient(rgba(26, 26, 26, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px, 11px 11px;
+  background-position: 0 0, 7px 7px;
+  mix-blend-mode: multiply;
 }
 
-/* SIDEBAR - SIMPLE FIXED POSITION */
+/* ---------- Sidebar ---------- */
 .sidebar-container {
-  width: 280px;
-  height: 100vh;
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
+  height: 100vh;
+  width: 260px;
+  background: var(--ink);
+  color: var(--paper);
+  border-right: 1.5px solid var(--ink);
   z-index: 100;
   overflow-y: auto;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* MAIN CONTENT AREA - SIMPLE */
-.main-content-area {
-  min-height: 100vh;
-  margin-left: 280px; /* This is the key - starts after sidebar */
-  display: flex;
-  flex-direction: column;
+/* Override any inherited sidebar inner styles */
+.sidebar-container .sidebar,
+.sidebar-container nav,
+.sidebar-container > div {
+  background: transparent;
+  color: inherit;
 }
 
-/* Navbar */
-.navbar-glass {
-  position: sticky;
-  top: 0;
-  z-index: 99;
-  flex-shrink: 0;
-}
-
-/* Content wrapper */
-.content-wrapper {
-  flex: 1;
-  overflow-y: auto;
-  height: calc(100vh - 80px);
-}
-
-/* Page content */
-.page-content {
-  height: 100%;
-  padding: 2rem;
-  background: rgba(255, 255, 255, 0.9);
-}
-
-/* MOBILE STYLES */
 @media (max-width: 1023px) {
   .sidebar-container {
     transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    box-shadow: 6px 0 0 var(--tangerine);
   }
-  
   .sidebar-container.sidebar-open {
     transform: translateX(0);
   }
-  
-  .main-content-area {
-    margin-left: 0 !important;
-    width: 100%;
-  }
-  
-  .sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 99;
-  }
-  
-  .content-wrapper {
-    height: calc(100vh - 60px);
-  }
-  
-  .page-content {
-    padding: 1rem;
-  }
 }
 
-/* Desktop - ensure sidebar is visible */
-@media (min-width: 1024px) {
-  .sidebar-container {
-    transform: translateX(0) !important;
+/* Mobile overlay */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 90;
+  animation: overlayIn 0.2s ease both;
+}
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---------- Main content ---------- */
+.main-content-area {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-left: 260px;
+  transition: margin-left 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.main-content-area.mobile-view {
+  margin-left: 0;
+}
+
+/* ---------- Navbar (top bar) ---------- */
+.main-content-area > nav,
+.main-content-area > header,
+.main-content-area .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(244, 239, 230, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1.5px solid var(--ink);
+}
+
+/* ---------- Content wrapper ---------- */
+.content-wrapper {
+  flex: 1;
+  min-width: 0;
+  padding: clamp(1.25rem, 2.5vw, 2.5rem);
+}
+
+.page-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: pageFade 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes pageFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Global editorial overrides for inner pages ---------- */
+/* Headings inside pages use Fraunces */
+.page-content h1,
+.page-content h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.page-content h3,
+.page-content h4,
+.page-content h5 {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+/* Body copy */
+.page-content p,
+.page-content span,
+.page-content li {
+  color: var(--ink-soft);
+}
+
+/* Small labels uppercase mono — applied to badges/labels */
+.page-content .badge,
+.page-content .label,
+.page-content .eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Buttons inside pages */
+.page-content .btn,
+.page-content button {
+  font-family: 'Inter Tight', sans-serif;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.page-content .btn-primary {
+  background: var(--tangerine) !important;
+  color: var(--ink) !important;
+  border: 1.5px solid var(--ink) !important;
+  border-radius: 999px !important;
+  box-shadow: 3px 3px 0 var(--ink);
+  font-weight: 600;
+}
+.page-content .btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+/* Cards inside pages */
+.page-content .card {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--ink) !important;
+  border-radius: 14px !important;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+/* Tables inside pages */
+.page-content table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.page-content th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1.5px solid var(--ink);
+  padding: 0.65rem 0.5rem;
+  text-align: left;
+}
+.page-content td {
+  border-bottom: 1px solid var(--rule);
+  padding: 0.85rem 0.5rem;
+}
+.page-content tr:last-child td { border-bottom: none; }
+
+/* Numbers (amounts, balances) get mono treatment */
+.page-content .amount,
+.page-content .balance {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Scrollbars (WebKit) ---------- */
+.dashboard-layout ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.dashboard-layout ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dashboard-layout ::-webkit-scrollbar-thumb {
+  background: rgba(26, 26, 26, 0.18);
+  border-radius: 999px;
+  border: 2px solid var(--paper);
+}
+.dashboard-layout ::-webkit-scrollbar-thumb:hover {
+  background: rgba(26, 26, 26, 0.3);
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-container,
+  .main-content-area,
+  .page-content {
+    transition: none !important;
+    animation: none !important;
   }
 }

@@ -30,7 +30,7 @@
   overflow-x: hidden;
 }
 
-/* Subtle paper grain overlay (replaces blurred gradients) */
+/* Subtle paper grain overlay */
 .paper-grain {
   position: fixed;
   inset: 0;
@@ -45,22 +45,23 @@
   mix-blend-mode: multiply;
 }
 
-/* ---------- Sidebar ---------- */
+/* ---------- Sidebar (cream rail, matches landing page) ---------- */
 .sidebar-container {
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   width: 260px;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
   border-right: 1.5px solid var(--ink);
   z-index: 100;
   overflow-y: auto;
+  overflow-x: hidden;
   transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Override any inherited sidebar inner styles */
+/* Any nested element inside the sidebar inherits the cream canvas */
 .sidebar-container .sidebar,
 .sidebar-container nav,
 .sidebar-container > div {
@@ -68,6 +69,7 @@
   color: inherit;
 }
 
+/* Mobile: sidebar slides in from the left */
 @media (max-width: 1023px) {
   .sidebar-container {
     transform: translateX(-100%);
@@ -84,6 +86,7 @@
   inset: 0;
   background: rgba(26, 26, 26, 0.45);
   backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   z-index: 90;
   animation: overlayIn 0.2s ease both;
 }
@@ -111,7 +114,8 @@
 /* ---------- Navbar (top bar) ---------- */
 .main-content-area > nav,
 .main-content-area > header,
-.main-content-area .navbar {
+.main-content-area .navbar,
+.main-content-area .nv-root {
   position: sticky;
   top: 0;
   z-index: 50;
@@ -139,7 +143,6 @@
 }
 
 /* ---------- Global editorial overrides for inner pages ---------- */
-/* Headings inside pages use Fraunces */
 .page-content h1,
 .page-content h2 {
   font-family: 'Fraunces', serif;
@@ -163,7 +166,7 @@
   color: var(--ink-soft);
 }
 
-/* Small labels uppercase mono — applied to badges/labels */
+/* Small labels uppercase mono */
 .page-content .badge,
 .page-content .label,
 .page-content .eyebrow {
@@ -178,7 +181,8 @@
 .page-content .btn,
 .page-content button {
   font-family: 'Inter Tight', sans-serif;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+              background-color 0.15s ease;
 }
 
 .page-content .btn-primary {
@@ -221,10 +225,11 @@
 .page-content td {
   border-bottom: 1px solid var(--rule);
   padding: 0.85rem 0.5rem;
+  color: var(--ink-soft);
 }
 .page-content tr:last-child td { border-bottom: none; }
 
-/* Numbers (amounts, balances) get mono treatment */
+/* Numbers get mono treatment */
 .page-content .amount,
 .page-content .balance {
   font-family: 'JetBrains Mono', monospace;

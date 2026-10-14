@@ -77,10 +77,7 @@ const Dashboard = () => {
 
       {/* Main content */}
       <div className={`main-content-area ${isMobile ? "mobile-view" : ""}`}>
-        <Navbar
-          toggleSidebar={toggleSidebar}
-          isSidebarOpen={isSidebarOpen}
-        />
+       
 
         <main className="content-wrapper">
           <div className="page-content" key={ActivePage}>
